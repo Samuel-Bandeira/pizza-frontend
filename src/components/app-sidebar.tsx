@@ -48,6 +48,7 @@ const data = {
       url: "/stores",
       icon: Store,
       isActive: true,
+      roles: ["admin", "manager"],
     },
     {
       title: "Ingredientes",
@@ -74,7 +75,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.routes} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

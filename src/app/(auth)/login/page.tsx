@@ -15,13 +15,16 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { axiosInstance } from "@/api/instance";
-import { useAuthStore } from "@/stores/auth";
+import { useAuthStore, useUserStore } from "@/stores/auth";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function Page() {
   const accessToken = useAuthStore((s) => s.accessToken);
   const { setTokens } = useAuthStore();
+  const { setUser } = useUserStore();
+  const [showPass, setShowPass] = useState(false);
   const router = useRouter();
 
   const form = useForm<loginSchemaType>({
@@ -39,6 +42,10 @@ export default function Page() {
         data
       );
       setTokens(credentials.access_token, credentials.refresh_token);
+
+      const { data: me } = await axiosInstance.get("/users/me");
+      setUser(me);
+
       router.push("/stores/");
     } catch (error) {
       console.log("error post", error);
@@ -83,7 +90,19 @@ export default function Page() {
               <FormItem>
                 <FormLabel>Senha</FormLabel>
                 <FormControl>
-                  <Input placeholder="Insira a senha" {...field} />
+                  <div className="relative">
+                    <Input
+                      type={showPass ? "text" : "password"}
+                      placeholder="Insira a senha"
+                      {...field}
+                    />
+                    <div
+                      className="absolute top-2 right-2.5"
+                      onClick={() => setShowPass(!showPass)}
+                    >
+                      {showPass ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </div>
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>
