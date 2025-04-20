@@ -25,6 +25,9 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import Link from "next/link";
+import { useAuthStore } from "@/stores/auth";
+import { useRouter } from "next/navigation";
 
 export function NavUser({
   user,
@@ -36,7 +39,7 @@ export function NavUser({
   };
 }) {
   const { isMobile } = useSidebar();
-
+  const router = useRouter();
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -98,7 +101,12 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup> */}
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => {
+                useAuthStore.getState().setTokens(null, null);
+                router.replace("/login");
+              }}
+            >
               <LogOut />
               Sair
             </DropdownMenuItem>
