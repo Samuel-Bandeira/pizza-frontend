@@ -4,5 +4,5 @@ import { useAuthGuard } from "@/hooks/use-auth-guard";
 
 export default function Page() {
   useAuthGuard(["manager"]);
-  return <div>Notificações</div>;
+  return <div>Clientes</div>;
 }

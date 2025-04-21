@@ -97,6 +97,7 @@ export function NavUser() {
               onClick={() => {
                 useAuthStore.getState().setTokens(null, null);
                 useUserStore.getState().clearUser();
+                localStorage.removeItem("auth-storage");
                 router.replace("/login");
               }}
             >

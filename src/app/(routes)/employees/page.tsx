@@ -3,6 +3,6 @@
 import { useAuthGuard } from "@/hooks/use-auth-guard";
 
 export default function Page() {
-  useAuthGuard(["manager"]);
-  return <div>Notificações</div>;
+  useAuthGuard(["owner", "manager"]);
+  return <div>Funcionários</div>;
 }

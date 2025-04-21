@@ -17,7 +17,7 @@ axiosInstance.interceptors.request.use(
 );
 
 const tryRefreshToken = async (originalError: AxiosError) => {
-  console.log("trying to get a new token");
+  // console.log("trying to get a new token");
   const refreshToken = useAuthStore.getState().refreshToken;
 
   if (!refreshToken) {
@@ -30,7 +30,7 @@ const tryRefreshToken = async (originalError: AxiosError) => {
       refresh_token: refreshToken,
     });
 
-    console.log("new token!", credentials.access_token);
+    // console.log("new token!", credentials.access_token);
 
     useAuthStore
       .getState()
@@ -42,7 +42,6 @@ const tryRefreshToken = async (originalError: AxiosError) => {
     return axiosInstance(originalRequest);
   } catch (error) {
     useAuthStore.getState().setTokens(null, null);
-    window.location.href = "/login";
     return Promise.reject(error);
   }
 };
@@ -53,7 +52,7 @@ axiosInstance.interceptors.response.use(
     console.log("error", error);
     const status = error.response?.status;
     if (status === 401) {
-      tryRefreshToken(error);
+      return tryRefreshToken(error);
     }
 
     return Promise.reject(error);

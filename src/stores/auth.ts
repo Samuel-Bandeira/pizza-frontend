@@ -25,7 +25,7 @@ type User = {
   id: number;
   email: string;
   username: string;
-  roles: string[];
+  role: string;
 };
 
 type UserState = {

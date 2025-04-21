@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { axiosInstance } from "@/api/instance";
 import { useUserStore } from "@/stores/auth";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,6 +24,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const router = useRouter();
+
   useEffect(() => {
     const getMe = async () => {
       const authStorage = localStorage.getItem("auth-storage");
@@ -39,7 +42,9 @@ export default function RootLayout({
             headers: { Authorization: `Bearer ${accessToken}` },
           });
           useUserStore.getState().setUser(user);
-        } catch (error) {}
+        } catch (error) {
+          // router.push("/login");
+        }
       }
     };
 

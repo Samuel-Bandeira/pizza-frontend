@@ -42,11 +42,9 @@ export default function Page() {
         data
       );
       setTokens(credentials.access_token, credentials.refresh_token);
-
       const { data: me } = await axiosInstance.get("/users/me");
       setUser(me);
-
-      router.push("/stores/");
+      router.push("/");
     } catch (error) {
       console.log("error post", error);
       toast("Erro ao realizar login", {
@@ -57,7 +55,7 @@ export default function Page() {
 
   useEffect(() => {
     if (accessToken) {
-      router.push("/stores/");
+      router.push("/");
     }
   }, [accessToken]);
 

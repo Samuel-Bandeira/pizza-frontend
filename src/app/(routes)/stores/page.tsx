@@ -3,6 +3,6 @@
 import { useAuthGuard } from "@/hooks/use-auth-guard";
 
 export default function Page() {
-  useAuthGuard();
+  useAuthGuard(["owner"]);
   return <div>Lojas</div>;
 }
